@@ -69,9 +69,11 @@ jobs:
           DEBIAN_FRONTEND: noninteractive
         run: |
           sudo snap refresh --hold
-          sudo apt -yqq purge azure-cli
+          sudo rm -rf /opt/az
           sudo apt -yqq remove -y azure-cli
-          sudo rm /etc/apt/sources.list.d/azure-cli.list
+          if [ -f /etc/apt/sources.list.d/azure-cli.sources ]; then
+            sudo rm /etc/apt/sources.list.d/azure-cli.sources
+          fi
           sudo apt -yqq update
           sudo apt -yqq full-upgrade
           sudo apt -yqq autoremove --purge
